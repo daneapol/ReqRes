@@ -23,7 +23,7 @@ Then('I print available users with odd ID numbers', () => {
 });
 
 Given('I send a request to create a new user with name {string} and job {string}', async (name: string, job: string) => {
-    console.info(`Sending request to create user with name '${name}' and job '${job}'`);
+    console.info(`Sending request to create user  (name = '${name}', job '${job}')`);
     const userToCreate: CRUDUser = { name, job };
     response = await I.sendPostRequest('/api/users', userToCreate);
 });
@@ -37,7 +37,7 @@ Then('I should see that the creation date is today', () => {
 let userToUpdate: CRUDUser;
 
 Given('I send a request to update user with name {string} and job {string}', async (name: string, job: string) => {
-    console.info(`Sending request to update user with name '${name}' with job '${job}'`);
+    console.info(`Sending request to update user (name = '${name}', job '${job}')`);
     userToUpdate = { name, job };
     response = await I.sendPutRequest('/api/users/2', userToUpdate);
 });
@@ -55,4 +55,18 @@ Given('I send a request to login user {string} but no password', async (email: s
 Then('I should see that the user cannot login', () => {
     console.error(response.data.error);
     I.seeResponseCodeIsClientError();
+});
+
+let requestStartTime: number;
+
+Given('I send a request to get the list of available users with delay parameter {int}', async (delay: number) => {
+    console.info(`Sending request to get list of available users (delay = ${delay})`);
+    requestStartTime = Date.now();
+    response = await I.sendGetRequest(`/api/users?delay=${delay}`);
+});
+
+Then('I should see that the response time is no longer than 1 second', () => {
+    const secondsElapsed = (Date.now() - requestStartTime) / 3600;
+    consoleLogAndTable(`Response arrived after ${secondsElapsed} seconds:`, response.data.data);
+    I.assertBelow(secondsElapsed, 1);
 });
