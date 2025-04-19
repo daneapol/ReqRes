@@ -53,7 +53,7 @@ Given('I send a request to login user {string} but no password', async (email: s
 });
 
 Then('I should see that the user cannot login', () => {
-    console.error(response.data.error);
+    console.error(`Login error message: ${response.data.error}`);
     I.seeResponseCodeIsClientError();
 });
 
@@ -66,7 +66,7 @@ Given('I send a request to get the list of available users with delay parameter 
 });
 
 Then('I should see that the response time is no longer than 1 second', () => {
-    const secondsElapsed = (Date.now() - requestStartTime) / 3600;
+    const secondsElapsed = (Date.now() - requestStartTime) / 1000;
     consoleLogAndTable(`Response arrived after ${secondsElapsed} seconds:`, response.data.data);
     I.assertBelow(secondsElapsed, 1);
 });
