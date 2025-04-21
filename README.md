@@ -5,29 +5,25 @@ This project contains end-to-end automated tests for the [ReqRes](https://reqres
 
 ## Getting Started
 
-### 1. Install [Git](https://git-scm.com/downloads)
+### 1. Install [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en)
 
 ### 2. Clone the repository
-
 ```
 git clone https://github.com/daneapol/ReqRes.git
 cd ReqRes
 ```
 
 ### 3. Install dependencies
-
 ```
 npm install
 ```
 
 ### 4. Run the tests
-
 ```
 npx codeceptjs run
 ```
 
 ### To run specific features
-
 ```
 npx codeceptjs run --grep "Get a list of available users and print users with odd ID numbers"
 npx codeceptjs run --grep "Create a new user and validate that the creation date is today"
@@ -44,4 +40,11 @@ npx codeceptjs run --features features/scenario_2.feature
 npx codeceptjs run --features features/scenario_3.feature
 npx codeceptjs run --features features/scenario_4.feature
 npx codeceptjs run --features features/scenario_5.feature
+```
+
+### To examine results
+Add `--verbose` to any command to see detailed logs. For example:
+```
+npx codeceptjs run --grep "Get a list of available users and print users with odd ID numbers" --verbose
+npx codeceptjs run --features features/scenario_1.feature --verbose
 ```
